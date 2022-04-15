@@ -30,59 +30,33 @@ export default function Groups() {
                 'country',
                 'color',
                 'city'
-
-
             ];
             return { ...data };
-
         }
         else {
             const currentFilter = filterKeys[0];
             filterKeys.shift();
-            //console.log('filterKeys', filterKeys);
             data.forEach(element => {
-                //console.log('element', element);
-
                 list.push(element[currentFilter])
-
             });
-            //console.log('list', list);
-            //console.log('filterKeys', filterKeys);
             const uniqueList = [...new Set(list)];
-            //console.log('uniqueList', uniqueList);
             var filterBy = [{ name: '', data: '' }];
             var initialValue = [];
             const x = uniqueList.reduce(
                 (acc, element, index) => {
-
-                    //console.log(element);
-                    //  console.log('element', element);
                     const temp = data.filter(c => c[currentFilter] == element);
-
                     temp.forEach(el => {
                         delete el[currentFilter]
                     });
-                    //  console.log('temp',temp);
                     //console.log('==>',{ name: element, data: getData( temp) });
-                    // const b= getData( temp);
-                    // console.log(index);
-
                     // if (index == 0) {
                     //console.log(acc);
-
                     return [...acc, { name: element, data: getData(temp) }];
                     // }
-
                     // return [...acc, { name: element, data: getData(temp) }];
-
-
                 }, initialValue);
-
-
-
             return x;
         }
-
     }
     return (
         <div>
