@@ -9,54 +9,62 @@ export default function Groups() {
         'country',
         'color',
         'city'
-
-
     ];
-
+    const filterKeysInitial = [...filterKeys];
     const generate = () => {
         list = [];
 
         ///console.log(...data);
-        const me = getData(alldata);
+        const me = getData(alldata,filterKeys[0]);
         console.log('me', me);
-        console.log("output", output);
+        // console.log("output", output);
     }
-
-    const getData = (data) => {
-        //console.log('data',data);
+    //var filterIndex = 0;
+    const getData = (data,filter) => {
+        //console.log('data', data);
         list = [];
-        if (filterKeys.length <= 0) {
-            filterKeys = [
-                'country',
-                'color',
-                'city'
-            ];
+        var isLastChild = false;
+        data.forEach((item) => {
+            filterKeysInitial.forEach((key) => {
+              isLastChild=  isLastChild||(item.hasOwnProperty(key));
+            });
+          //  console.log('isLastChild: ', isLastChild, '==item: ', item);
+        });
+
+        if (!isLastChild) {
+            //filterIndex = 0;
+            //console.log('isLastChild run', data);
+            isLastChild = false;
+            filterKeys=[...filterKeysInitial];
             return { ...data };
         }
         else {
-            const currentFilter = filterKeys[0];
-            filterKeys.shift();
+            //const currentFilter = filterKeys[0];
+            // filterKeys.shift();
+            //filterIndex++;
             data.forEach(element => {
-                list.push(element[currentFilter])
+                list.push(element[filter])
             });
+
+
             const uniqueList = [...new Set(list)];
-            var filterBy = [{ name: '', data: '' }];
+
+            
             var initialValue = [];
             const x = uniqueList.reduce(
                 (acc, element, index) => {
-                    const temp = data.filter(c => c[currentFilter] == element);
-                    temp.forEach(el => {
-                        delete el[currentFilter]
-                    });
-                    //console.log('==>',{ name: element, data: getData( temp) });
-                    // if (index == 0) {
-                    //console.log(acc);
-                    return [...acc, { name: element, data: getData(temp) }];
-                    // }
-                    // return [...acc, { name: element, data: getData(temp) }];
+                    if (element) {
+                        // console.log(element);
+                        const temp = data.filter(c => c[filter] == element);
+                        temp.forEach(el => {
+                            delete el[filter]
+                        });
+                        return [...acc, { name: element, data: getData(temp,filterKeys[(filterKeys.indexOf(filter))+1]) }];
+                    }
                 }, initialValue);
             return x;
         }
+
     }
     return (
         <div>
