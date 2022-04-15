@@ -1,28 +1,38 @@
 import React from 'react'
 
 
-export const RecursiveFilter = (props) => {
-   const { name }=props;
-   const {items}=props;
-    const hasChildren = items && items.length
-// console.log('items: ',items);
+export const RecursiveFilter = ({ data }) => {
+
+const {id}=data[0]?data[0]:'';
+const {fullname}=data[0]?data[0]:'';
+    var hasChildren = data && data.length;
+    //console.log(data);
+    // data.forEach((item) => {
+    //     hasChildren = hasChildren || (item.hasOwnProperty('data'));
+    // });
+
+    //console.log('items: ', data);
     return (
         <>
-         
 
-            {hasChildren ? items.map((item) => (
+
+            {hasChildren ? data.map((item, index) => (
                 <>
-                <div className='item'>
-                
-                    <h6>{name}</h6>
-                    <RecursiveFilter key={item.name} {...item} />
-                   
+                    <div key={index} className='item'>
+
+                        {item.name}
+                        <RecursiveFilter key={index} data={item.data} />
+
                     </div>
                 </>
-            )):
-           <div className='item'>
-             {props.id} - {props.full}
-           </div> 
+            )) :
+
+                <div className='item'>
+                     {id}-{fullname}
+                    {/* {data[0].id} */}
+                    {/* {data[0].fullname} */}
+                </div>
+
             }
         </>
     )

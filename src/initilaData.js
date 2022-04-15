@@ -16,7 +16,7 @@ export const rawData = [
     { id: 5, country: "United States", city: "Bakersfield", color: "Yellow", fullname: "Lutero Bayldon" },
     { id: 5, country: "United States", city: "Olympia", color: "Yellow", fullname: "Brewster Malsher" },
     { id: 7, country: "China", city: "Jitian", color: "Violet", fullname: "Jasun Bon" },
-    { id: 8, country: "China", city: "Jitian1", color: "Violet", fullname: "Amalia Heskin" },
+    { id: 8, country: "China", city: "Jitian", color: "Violet", fullname: "Amalia Heskin" },
     { id: 9, country: "China", city: "Fuhai", color: "blue", fullname: "Ilario MacMickan" }
     // { id: 12, country: "Montenegro", city: "Bijela", color: "Orange", fullname: "Aurea Caddies" },
     // { id: 13, country: "Argentina", city: "General Alvear", color: "Fuscia", fullname: "Laurette Matusevich" },
