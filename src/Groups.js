@@ -2,6 +2,13 @@ import React from 'react'
 import { rawData } from './initilaData';
 import { useEffect, useState } from 'react';
 import { RecursiveFilter } from './RecursiveFilter';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 export default function Groups() {
     const [alldata, setAlldata] = useState(rawData);
     const output = [];
@@ -68,10 +75,31 @@ export default function Groups() {
         }
 
     }
+    useEffect(() => {
+
+        generate();
+    }, [])
+
     return (
         <div>
-            <input type='button' value='Click Me!' onClick={generate} />
-            <RecursiveFilter data={groupData} />
+            <TableContainer component={Paper}>
+                <Table aria-label="collapsible table">
+                    {/* <TableHead>
+          <TableRow>
+            <TableCell />
+            <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell align="right">Calories</TableCell>
+            <TableCell align="right">Fat&nbsp;(g)</TableCell>
+            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+          </TableRow>
+        </TableHead> */}
+                    <TableBody>
+                        <RecursiveFilter data={groupData} />
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
         </div>
     )
 }
