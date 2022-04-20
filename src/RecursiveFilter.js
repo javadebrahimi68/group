@@ -11,13 +11,14 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 export const RecursiveFilter = ({ data, columns }) => {
+  console.log('data col: ',data,columns);
   var hasChildren = data && data.length;
   return (
     <React.Fragment>
       {
         hasChildren ? data.map((item, index) => (
-          <Accordion >
-            <AccordionSummary sx={{ flexDirection: 'row-reverse !important' }}
+          <Accordion key={index} >
+            <AccordionSummary key={index} sx={{ flexDirection: 'row-reverse !important' }}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
@@ -36,10 +37,10 @@ export const RecursiveFilter = ({ data, columns }) => {
                 <TableHead>
                   <TableRow>
 
-                    {(data.length != 0) ?
+                    {(data && data.length != 0) ?
                       Object.keys(Object.values(data)[0]).map((ele, i) => {
                         return (
-                          <TableCell keys={i}><strong>{columns.find(c => c.name == ele).title}</strong></TableCell>
+                          <TableCell  keys={i}><strong>{columns.find(c => c.name == ele).title}</strong></TableCell>
                           // <TableCell><strong>Full Name</strong></TableCell>
                         )
                       })
@@ -49,13 +50,13 @@ export const RecursiveFilter = ({ data, columns }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Object.values(data).map((ele) => {
+                  { data && Object.values(data).map((ele,index) => {
                     return (
 
-                      <TableRow>
-                        {Object.values(ele).map((ite)=>{
+                      <TableRow key={index}>
+                        {Object.values(ele).map((ite,index)=>{
                           return(
-                          <TableCell>
+                          <TableCell key={index}>
 
 
                           { ite }

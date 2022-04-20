@@ -8,21 +8,20 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-export default function Groups({filterKeys,rawdata,columnTitle}) {
+export default function Groups({ filterKeys, rawdata, columnTitle }) {
     const [alldata, setAlldata] = useState([...rawdata]);
     const output = [];
     let list = [];
-    
-   
+
+
     const filterKeysInitial = [...filterKeys];
     const [groupData, setGroupData] = useState([]);
     const generate = () => {
         list = [];
-
-        ///console.log(...data);
+console.log('alldata, filterKeys[0]: ' ,alldata, filterKeys[0])
         setGroupData(getData(alldata, filterKeys[0]));
-        console.log('groupData: ', groupData);
-        // console.log("output", output);
+
+
     }
     //var filterIndex = 0;
     const getData = (data, filter) => {
@@ -72,15 +71,16 @@ export default function Groups({filterKeys,rawdata,columnTitle}) {
 
     }
     useEffect(() => {
-
+      
         generate();
+        //console.log('groupData',rawdata);
     }, [])
 
     return (
         <div>
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
-                  
+
                     <TableBody>
                         <RecursiveFilter data={groupData} columns={columnTitle} />
                     </TableBody>

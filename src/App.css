@@ -41,3 +41,9 @@ body{
 .item{
   margin-left: 20px;
 }
+#div1{
+
+height: 70px;
+padding: 10px;
+border: 1px solid #aaaaaa;
+}
