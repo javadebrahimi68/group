@@ -1,104 +1,79 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Table from '@mui/material/Table';
-import { Typography, IconButton, Collapse, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-
-
-export const RecursiveFilter = ({ data,columns }) => {
-  const [open, setOpen] = React.useState(false);
-
-  // const { id } = data[0] ? data[0] : '';
-  // const { fullname } = data[0] ? data[0] : '';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+export const RecursiveFilter = ({ data, columns }) => {
   var hasChildren = data && data.length;
-
-
   return (
-
     <React.Fragment>
-      {hasChildren ? data.map((item, index) => (
-        <>
+      {
+        hasChildren ? data.map((item, index) => (
+          <Accordion >
+            <AccordionSummary sx={{    flexDirection: 'row-reverse !important'}}
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>  {item.name}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <RecursiveFilter key={index} data={item.data} columns={columns} />
+            </AccordionDetails>
+          </Accordion>
+        )) :
+          <Accordion>
 
-          <TableRow
-            sx={{ borderTop: '1px solid !important' }}
-          >
-
-            <TableCell sx={{ paddingLeft: '100px', paddingTop: '0px', paddingRight: '0px', border: '0px solid !important' }} >
-
-
-
-              <IconButton
-                aria-label="expand row"
-                size="small"
-                onClick={() => setOpen(!open)}
-              >
-                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-              {item.name}
-              <RecursiveFilter key={index} data={item.data} columns={columns}/>
-            </TableCell>
-
-
-
-          </TableRow>
-
-        </>
-      )) :
-        <TableRow>
-
-          <Table >
-            <TableHead>
-              <TableRow>
-             {console.log((Object.values(data)))}
-                {columns.map((ele) => {
-                  return (
-                    <TableCell><strong>xx</strong></TableCell>
-                    // <TableCell><strong>Full Name</strong></TableCell>
-                  )
-                })
-
-                }
-
-              </TableRow>
-            </TableHead>
-            <TableBody>
-
-             
-              {Object.values(data).map((ele) => {
-                return (
+            <AccordionDetails>
+              <Table >
+                <TableHead>
                   <TableRow>
 
-                    <TableCell>
+                    {(data.length != 0) ?
+                      Object.keys(Object.values(data)[0]).map((ele, i) => {
+                        return (
+                          <TableCell keys={i}><strong>{columns.find(c => c.name == ele).title}</strong></TableCell>
+                          // <TableCell><strong>Full Name</strong></TableCell>
+                        )
+                      })
+                      : ''
+                    }
 
-
-                      {ele.id}
-
-                    </TableCell>
-                    <TableCell>
-                      {ele.fullname}
-
-                    </TableCell>
                   </TableRow>
+                </TableHead>
+                <TableBody>
+                  {Object.values(data).map((ele) => {
+                    return (
+                      <TableRow>
 
-                )
-              })
+                        <TableCell>
 
-              }
-            </TableBody>
-          </Table>
 
-        </TableRow>
+                          {ele.id}
+
+                        </TableCell>
+                        <TableCell>
+                          {ele.fullname}
+
+                        </TableCell>
+                      </TableRow>
+
+                    )
+                  })
+                  }
+                </TableBody>
+              </Table>
+
+            </AccordionDetails>
+          </Accordion>
       }
     </React.Fragment>
-
-
-
   )
 }
