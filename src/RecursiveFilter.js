@@ -12,11 +12,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
 
-export const RecursiveFilter = ({ data }) => {
+export const RecursiveFilter = ({ data,columns }) => {
   const [open, setOpen] = React.useState(false);
 
-  const { id } = data[0] ? data[0] : '';
-  const { fullname } = data[0] ? data[0] : '';
+  // const { id } = data[0] ? data[0] : '';
+  // const { fullname } = data[0] ? data[0] : '';
   var hasChildren = data && data.length;
 
 
@@ -27,10 +27,10 @@ export const RecursiveFilter = ({ data }) => {
         <>
 
           <TableRow
-           sx={{border:'0px solid !important'}}
-           >
+            sx={{ borderTop: '1px solid !important' }}
+          >
 
-            <TableCell sx={{ paddingLeft: '100px', paddingTop: '0px', paddingRight: '0px' ,border:'0px solid !important'}} >
+            <TableCell sx={{ paddingLeft: '100px', paddingTop: '0px', paddingRight: '0px', border: '0px solid !important' }} >
 
 
 
@@ -42,7 +42,7 @@ export const RecursiveFilter = ({ data }) => {
                 {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </IconButton>
               {item.name}
-              <RecursiveFilter key={index} data={item.data} />
+              <RecursiveFilter key={index} data={item.data} columns={columns}/>
             </TableCell>
 
 
@@ -56,24 +56,41 @@ export const RecursiveFilter = ({ data }) => {
           <Table >
             <TableHead>
               <TableRow>
-                <TableCell><strong>Id</strong></TableCell>
-                <TableCell><strong>Full Name</strong></TableCell>
+             {console.log((Object.values(data)))}
+                {columns.map((ele) => {
+                  return (
+                    <TableCell><strong>xx</strong></TableCell>
+                    // <TableCell><strong>Full Name</strong></TableCell>
+                  )
+                })
+
+                }
 
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>
+
+             
+              {Object.values(data).map((ele) => {
+                return (
+                  <TableRow>
+
+                    <TableCell>
 
 
-                  {id}
+                      {ele.id}
 
-                </TableCell>
-                <TableCell>
-                  {fullname}
+                    </TableCell>
+                    <TableCell>
+                      {ele.fullname}
 
-                </TableCell>
-              </TableRow>
+                    </TableCell>
+                  </TableRow>
+
+                )
+              })
+
+              }
             </TableBody>
           </Table>
 

@@ -18,6 +18,13 @@ export default function Groups() {
         'color',
         'city'
     ];
+    const columnTitle=[
+        {name:'country',title:'Country'},
+        {name:'color',title:'Color'},
+        {name:'city',title:'City'},
+        {name:'id',title:'Id'},
+        {name:'fullname',title:'Full Name'},
+    ]
     const filterKeysInitial = [...filterKeys];
     const [groupData, setGroupData] = useState([]);
     const generate = () => {
@@ -84,18 +91,9 @@ export default function Groups() {
         <div>
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
-                    {/* <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead> */}
+                  
                     <TableBody>
-                        <RecursiveFilter data={groupData} />
+                        <RecursiveFilter data={groupData} columns={columnTitle} />
                     </TableBody>
                 </Table>
             </TableContainer>
