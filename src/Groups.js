@@ -1,5 +1,4 @@
 import React from 'react'
-import { rawData } from './initilaData';
 import { useEffect, useState } from 'react';
 import { RecursiveFilter } from './RecursiveFilter';
 import Table from '@mui/material/Table';
@@ -9,22 +8,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-export default function Groups() {
-    const [alldata, setAlldata] = useState(rawData);
+export default function Groups({filterKeys,rawdata,columnTitle}) {
+    const [alldata, setAlldata] = useState([...rawdata]);
     const output = [];
     let list = [];
-    var filterKeys = [
-        'country',
-        'color',
-        'city'
-    ];
-    const columnTitle=[
-        {name:'country',title:'Country'},
-        {name:'color',title:'Color'},
-        {name:'city',title:'City'},
-        {name:'id',title:'Id'},
-        {name:'fullname',title:'Full Name'},
-    ]
+    
+   
     const filterKeysInitial = [...filterKeys];
     const [groupData, setGroupData] = useState([]);
     const generate = () => {

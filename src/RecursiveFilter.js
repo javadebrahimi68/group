@@ -17,7 +17,7 @@ export const RecursiveFilter = ({ data, columns }) => {
       {
         hasChildren ? data.map((item, index) => (
           <Accordion >
-            <AccordionSummary sx={{    flexDirection: 'row-reverse !important'}}
+            <AccordionSummary sx={{ flexDirection: 'row-reverse !important' }}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
@@ -51,29 +51,28 @@ export const RecursiveFilter = ({ data, columns }) => {
                 <TableBody>
                   {Object.values(data).map((ele) => {
                     return (
+
                       <TableRow>
+                        {Object.values(ele).map((ite)=>{
+                          return(
+                          <TableCell>
 
-                        <TableCell>
 
-
-                          {ele.id}
-
-                        </TableCell>
-                        <TableCell>
-                          {ele.fullname}
+                          { ite }
 
                         </TableCell>
+                  )})}
                       </TableRow>
 
-                    )
+                )
                   })
                   }
-                </TableBody>
-              </Table>
+              </TableBody>
+            </Table>
 
-            </AccordionDetails>
+          </AccordionDetails>
           </Accordion>
       }
-    </React.Fragment>
+    </React.Fragment >
   )
 }
