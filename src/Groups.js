@@ -1,39 +1,53 @@
-import React from 'react'
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { RecursiveFilter } from './RecursiveFilter';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+
 import Paper from '@mui/material/Paper';
 export default function Groups({ filterKeys, rawdata, columnTitle }) {
-    const [alldata, setAlldata] = useState([...rawdata]);
-    const output = [];
+    console.log('rawdata', rawdata);
+    const [alldata, setAllData] = useState([])
+
     let list = [];
 
 
     const filterKeysInitial = [...filterKeys];
     const [groupData, setGroupData] = useState([]);
+    const setMyData = () => {
+        const myData = [];
+        for (var i = 0; i < rawdata.length; i++) {
+           alldata.push(rawdata[i]);
+        };
+
+        //setAllData([...myData]);
+    }
     const generate = () => {
+        setAllData([]);
+        setMyData();
+        console.log('alldata: ', alldata);
         list = [];
-console.log('alldata, filterKeys[0]: ' ,alldata, filterKeys[0])
-        setGroupData(getData(alldata, filterKeys[0]));
+        // console.log('alldata, filterKeys[0]: ',alldata, filterKeys[0]);
+        const dataConverted = getData([...alldata], filterKeys[0])
+        console.log('dataConverted: ', dataConverted);
+        setGroupData(dataConverted);
 
 
     }
+
     //var filterIndex = 0;
     const getData = (data, filter) => {
-        //console.log('data', data);
+
+        console.log('data', data);
         list = [];
         var isLastChild = false;
-        data.forEach((item) => {
-            filterKeysInitial.forEach((key) => {
+        for (const item of data) { // You can use `let` instead of `const` if you like
+            for (const key of filterKeysInitial) {
                 isLastChild = isLastChild || (item.hasOwnProperty(key));
-            });
-            //  console.log('isLastChild: ', isLastChild, '==item: ', item);
-        });
+            }
+        }
 
         if (!isLastChild) {
             //filterIndex = 0;
@@ -42,42 +56,46 @@ console.log('alldata, filterKeys[0]: ' ,alldata, filterKeys[0])
             filterKeys = [...filterKeysInitial];
             return { ...data };
         }
-        else {
-            //const currentFilter = filterKeys[0];
-            // filterKeys.shift();
-            //filterIndex++;
-            data.forEach(element => {
-                list.push(element[filter])
-            });
 
+        //const currentFilter = filterKeys[0];
+        // filterKeys.shift();
+        //filterIndex++;
+        for (const element of data)
+            list.push(element[filter])
 
-            const uniqueList = [...new Set(list)];
+        const uniqueList = [...new Set(list)];
+        var initialValue = [];
+        const x = uniqueList.reduce(
+            (acc, element, index) => {
+                if (element) {
+                    // console.log(element);
+                    var tempArray = [];
 
-
-            var initialValue = [];
-            const x = uniqueList.reduce(
-                (acc, element, index) => {
-                    if (element) {
-                        // console.log(element);
-                        const temp = data.filter(c => c[filter] == element);
-                        temp.forEach(el => {
-                            delete el[filter]
-                        });
-                        return [...acc, { name: element, data: getData(temp, filterKeys[(filterKeys.indexOf(filter)) + 1]) }];
+                    const temp = [...data.filter(c => c[filter] == element)];
+                    for (var i = 0; i < temp.length; i++) {
+                        const curr = temp[i];
+                        delete curr[filter];
+                        tempArray[i] = curr;
                     }
-                }, initialValue);
-            return x;
-        }
+                    // tempArray.forEach(el => {
+                    //     delete el[filter]
+                    // });
+                    return [...acc, { name: element, data: getData([...tempArray], filterKeys[(filterKeys.indexOf(filter)) + 1]) }];
+                }
+            }, initialValue);
+        return [...x];
+
 
     }
     useEffect(() => {
-      
+
         generate();
         //console.log('groupData',rawdata);
-    }, [])
+    }, [filterKeys])
 
     return (
         <div>
+
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
 
@@ -86,6 +104,8 @@ console.log('alldata, filterKeys[0]: ' ,alldata, filterKeys[0])
                     </TableBody>
                 </Table>
             </TableContainer>
+
+
 
         </div>
     )

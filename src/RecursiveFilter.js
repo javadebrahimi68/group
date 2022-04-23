@@ -11,7 +11,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 export const RecursiveFilter = ({ data, columns }) => {
-  console.log('data col: ',data,columns);
+  //console.log('data col: ',data,columns);
   var hasChildren = data && data.length;
   return (
     <React.Fragment>
@@ -37,7 +37,7 @@ export const RecursiveFilter = ({ data, columns }) => {
                 <TableHead>
                   <TableRow>
 
-                    {(data && data.length != 0) ?
+                    {(data && data.length > 0) ?
                       Object.keys(Object.values(data)[0]).map((ele, i) => {
                         return (
                           <TableCell  keys={i}><strong>{columns.find(c => c.name == ele).title}</strong></TableCell>
